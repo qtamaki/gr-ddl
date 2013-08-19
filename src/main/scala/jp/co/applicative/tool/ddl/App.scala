@@ -6,6 +6,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import scala.swing._
 import scala.swing.event._
+import java.net.URI
 
 object App extends SimpleSwingApplication {
 
@@ -32,7 +33,7 @@ object App extends SimpleSwingApplication {
   }
 
   val button = new Button {
-    text = "Create"
+    text = "Generate"
     reactions += {
       case e: ButtonClicked => execute(inPathText.text, outPathText.text)
     }
@@ -43,12 +44,14 @@ object App extends SimpleSwingApplication {
   val outPathText = new TextField("")
 
   def initPath = {
-    inPathText.text = joinPath(basePath, "テーブル定義_GoldRush.xls")
-    outPathText.text = joinPath((new File(basePath)).getParent(), "sql")
+    val file = new File(basePath)
+    inPathText.text = joinPath(basePath, file.list().filter(p => p.endsWith("_GoldRush.xls")).head)
+    outPathText.text = joinPath(file.getParent(), "sql")
   }
-  
+
   def execute(inPath: String, outPath: String) = {
     try {
+      (new File(basePath)).list().foreach(f => Dialog.showMessage(message = f))
       checkInPath(inPath)
       checkOutPath(outPath)
       GenerateDdl.execute(inPath, outPath)
