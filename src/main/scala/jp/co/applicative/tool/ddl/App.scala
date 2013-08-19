@@ -51,7 +51,6 @@ object App extends SimpleSwingApplication {
 
   def execute(inPath: String, outPath: String) = {
     try {
-      (new File(basePath)).list().foreach(f => Dialog.showMessage(message = f))
       checkInPath(inPath)
       checkOutPath(outPath)
       GenerateDdl.execute(inPath, outPath)
