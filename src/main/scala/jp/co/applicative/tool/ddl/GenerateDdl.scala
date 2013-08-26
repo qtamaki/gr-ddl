@@ -12,7 +12,7 @@ object GenerateDdl {
   val ignore = List("created_at", "updated_at", "created_user", "lock_version", "updated_user", "deleted_at", "deleted")
 
   def execute(inPath: String, outPath: String): Unit = {
-    
+
     val fileName = (new File(inPath)).getName()
 
     //格納用
@@ -58,7 +58,7 @@ object GenerateDdl {
 
   //header
   def getHeader(fileName: String, version: Double, date: Date): String = {
-    f"/*\r\n * ${fileName}にて自動生成\r\n * Base Version: $version Date: ${"%tY/%<tm/%<td" format date}\r\n */\r\n\r\nset names cp932;\r\n\r\n"
+    f"/*\r\n * ${fileName}にて自動生成\r\n * Base Version: $version Date: ${"%tY/%<tm/%<td" format date}\r\n */\r\n\r\n"
   }
 
   //Index
@@ -196,8 +196,7 @@ object GenerateDdl {
   }
 
   def outFile(outPath: String, fileName: String, sb: => StringBuilder) {
-    val fileOutputStream = new FileOutputStream(outPath + "/" + fileName)
-    val writer = new OutputStreamWriter(fileOutputStream)
+    val writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(outPath, fileName), false), "UTF-8")))
     writer.write(sb.result)
     writer.close()
   }
