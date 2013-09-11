@@ -58,7 +58,7 @@ object GenerateDdl {
 
   //header
   def getHeader(fileName: String, version: Double, date: Date): String = {
-    f"/*\r\n * ${fileName}にて自動生成\r\n * Base Version: $version Date: ${"%tY/%<tm/%<td" format date}\r\n */\r\n\r\n"
+    f"/*\r\n * ${fileName}にて自動生成\r\n * Base Version: $version Date: ${"%tY/%<tm/%<td" format date}\r\n */\r\n\r\nset names utf8;\r\n\r\n"
   }
 
   //Index
