@@ -45,7 +45,7 @@ object App extends SimpleSwingApplication {
 
   def initPath = {
     val file = new File(basePath)
-    inPathText.text = joinPath(basePath, file.list().filter(p => p.endsWith("_GoldRush.xls")).head)
+    inPathText.text = joinPath(basePath, file.list().filter(p => p.startsWith("テーブル定義_") && p.endsWith(".xls")).head) // TODO: エラー処理
     outPathText.text = joinPath(file.getParent(), "sql")
   }
 
