@@ -23,12 +23,18 @@ object App extends SimpleSwingApplication {
   }
 
   def inPanel: BoxPanel = new BoxPanel(Orientation.Horizontal) {
-    contents += new Label("In Path :")
+    val l = new Label("In Path :")
+    l.preferredSize = new Dimension(100,30)
+    l.horizontalAlignment = Alignment.Right
+    contents += l
     contents += inPathText
   }
 
   def outPanel: BoxPanel = new BoxPanel(Orientation.Horizontal) {
-    contents += new Label("Out Path:")
+    val l = new Label("Out Path :")
+    l.preferredSize = new Dimension(100,30)
+    l.horizontalAlignment = Alignment.Right
+    contents += l
     contents += outPathText
   }
 
@@ -45,7 +51,7 @@ object App extends SimpleSwingApplication {
 
   def initPath = {
     val file = new File(basePath)
-    inPathText.text = joinPath(basePath, file.list().filter(p => p.startsWith("テーブル定義_") && p.endsWith(".xls")).head) // TODO: エラー処理
+    inPathText.text = file.list().filter(p => p.startsWith("テーブル定義_") && p.endsWith(".xls")).map(joinPath(basePath, _)).headOption.getOrElse("テーブr定義ファイルがみつかりません")
     outPathText.text = joinPath(file.getParent(), "sql")
   }
 
